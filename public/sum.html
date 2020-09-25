@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment03</title>
+</head>
+
+<body>
+
+    <div id="demo">
+        <h1>Get input interger result</h1>
+        <input type="text" id='number' value='' placeholder="enter a positive integer">
+        <button type="button" onclick="loadDoc()">Submit</button>
+        <h2 id="answer">Result is : </h2>
+    </div>
+
+    <script>
+        function loadDoc() {
+            var sumNum = new XMLHttpRequest();
+            var value = document.getElementById("number").value;
+            sumNum.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("answer").innerHTML = this.responseText;
+                    console.log(this.responseText);
+                }
+            };
+            sumNum.open("GET", `http://localhost:3000/getData?number=${value}`);
+            sumNum.send();
+        }
+    </script>
+
+</html>
