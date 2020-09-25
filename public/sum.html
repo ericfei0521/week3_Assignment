@@ -21,7 +21,7 @@
             var sumNum = new XMLHttpRequest();
             var value = document.getElementById("number").value;
             sumNum.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
+                if (this.readyState === 4 && this.status === 200) {
                     document.getElementById("answer").innerHTML = this.responseText;
                     console.log(this.responseText);
                 }
