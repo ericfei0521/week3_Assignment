@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(cookieParser());
 
+// Using pug 
+app.set('view engine','pug');
 // assignment01
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/public' + '/index.html'));
@@ -15,7 +21,7 @@ app.get('/getData', function (req, res) {
     if(isNaN(number)===false && number>0){
         const returnNum = sumNum(number);
         res.send(`Result is ${returnNum}`)
-        console.log(number)
+        // console.log(number)
     }else if(!number){
         res.send(`<h1>Lack of Paramete</h1>`)
     }
@@ -31,9 +37,22 @@ function sumNum(number){
     }
     return sum;
 }
-// assignment03
-
-
+// assignment04
+app.post('/trackName',function(req,res){
+    res.cookie('username', req.body.username);
+    res.redirect('/myName');
+})
+app.get('/trackName',function(req,res){
+    res.render('trackName');
+})
+app.get('/myName',function(req,res){
+    const name = req.cookies.username;
+    if(name){
+        res.render('myName',{name});
+    }else if(!name){
+      res.redirect('/trackName');
+    }
+})
 
 
 
